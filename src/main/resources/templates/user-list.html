@@ -9,7 +9,7 @@
 <body>
 
 
-<div sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')" class="container">
+<div class="container">
 
     <div class="col-md-6">
         <H2>Users</H2>
@@ -22,6 +22,7 @@
             <td>Number</td>
             <td>Username</td>
             <td>Roles</td>
+            <td>Action</td>
             </thead>
 
             <th:block th:each="user, count : ${users}">
@@ -35,8 +36,10 @@
                 <span th:each="role : ${user.roles}">
                 [<span th:text="${role.name + ''}"></span>]
                 </span>
-
-
+                    </td>
+                   <!-- <td><a th:href="@{/user/delete/{id}(id=${user.id})}">Delete</a></td> -->
+                    <td><a th:href="@{'/user/delete/' + ${user.id}}" onclick="return confirm('Are you sure want to delete this user?')">Delete</a>
+                    <a th:href="@{'user/edit/' + ${user.id}}">Edit</a>
                     </td>
 
                 </tr>

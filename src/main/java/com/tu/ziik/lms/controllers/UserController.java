@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -31,11 +32,6 @@ public class UserController {
     @Autowired
     private RoleRepository roleRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
-
-    UserDetails details;
 
     @Autowired
     private UserValidator userValidator;
@@ -43,9 +39,7 @@ public class UserController {
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public String listUsers(Model model) {
 
-
-
-        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("users", userService.findAllUsers());
         return "user-list";
     }
 
@@ -74,6 +68,25 @@ public class UserController {
         return "redirect:/welcome";
     }
 
+    @RequestMapping(value = "user/delete/{id}", method = RequestMethod.GET)
+    public String deleteUser(@PathVariable Long id){
+
+        userService.delete(id);
+        return "redirect:/users";
+    }
+
+
+    @RequestMapping(value = "/user/edit/{id}")
+    public String showEditForm(@PathVariable Long id, Model model){
+
+        User user = userService.findById(id);
+
+        model.addAttribute("userForm", user);
+        model.addAttribute("roles", roleRepository.findAll());
+
+        return "register";
+    }
+
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model, String error, String logout) {
@@ -84,6 +97,13 @@ public class UserController {
             model.addAttribute("message", "You have been logged out successfully.");
 
         return "login";
+    }
+
+    @RequestMapping(value = "/user/forgot", method = RequestMethod.GET)
+    public String showForgetForm(){
+
+
+        return "forgot";
     }
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)

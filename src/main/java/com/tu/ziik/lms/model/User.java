@@ -12,11 +12,17 @@ import java.util.Set;
 @Table(name = "user")
 public class User {
     private Long id;
+    //@Column( unique=true, nullable=false )
     private String username;
     private String password;
-    @NotEmpty
     private String passwordConfirm;
     private Set<Role> roles;
+
+
+
+    @Version
+    private String version;
+
 
     private ArrayList<String> theRoles;
 
@@ -73,5 +79,13 @@ public class User {
 
     public void setTheRoles(ArrayList<String> theRoles) {
         this.theRoles = theRoles;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 }
