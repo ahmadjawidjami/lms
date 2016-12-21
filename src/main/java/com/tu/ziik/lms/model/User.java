@@ -4,6 +4,8 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,9 +15,10 @@ public class User {
     private String username;
     private String password;
     @NotEmpty
-
     private String passwordConfirm;
     private Set<Role> roles;
+
+    private ArrayList<String> theRoles;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -60,5 +63,14 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @Transient
+    public ArrayList<String> getTheRoles() {
+        return theRoles;
+    }
+
+    public void setTheRoles(ArrayList<String> theRoles) {
+        this.theRoles = theRoles;
     }
 }

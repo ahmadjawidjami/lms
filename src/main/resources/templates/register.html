@@ -1,5 +1,6 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title tiles:fragment="title">Messages : Create</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
@@ -10,14 +11,18 @@
 
 <div class="container">
 
-    <form name="f" th:object="${userForm}" th:action="@{/registration}" method="post">
+    <form class="form-horizontal" name="f" th:object="${userForm}" th:action="@{/user/register}" method="post">
+
+
+
+
 
         <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
             <p>Form has errors</p>
         </div>
 
         <div class="form-group" th:class="${#fields.hasErrors('username')} ? 'form-group has-error' : 'form-group'">
-            <label class="col-sm-2 control-label">Username:</label>
+            <label for="username" class="col-sm-2 control-label">Username:</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" name="username" id="username"/>
                 <span class="help-block" th:if="${#fields.hasErrors('username')}">
@@ -29,7 +34,7 @@
         </div>
 
         <div class="form-group" th:class="${#fields.hasErrors('password')} ? 'form-group has-error' : 'form-group'">
-            <label class="col-sm-2 control-label">Password:</label>
+            <label for="password" class="col-sm-2 control-label">Password:</label>
             <div class="col-sm-10">
                 <input type="password" class="form-control" name="password" id="password"/>
                 <span class="help-block" th:if="${#fields.hasErrors('password')}">
@@ -42,7 +47,7 @@
 
 
         <div class="form-group" th:class="${#fields.hasErrors('passwordConfirm')} ? 'form-group has-error' : 'form-group'">
-            <label class="col-sm-2 control-label">Retype password:</label>
+            <label for="passwordConfirm" class="col-sm-2 control-label">Retype password:</label>
             <div class="col-sm-10">
                 <input type="password" class="form-control" name="passwordConfirm" id="passwordConfirm"/>
                 <span class="help-block" th:if="${#fields.hasErrors('passwordConfirm')}">
@@ -53,14 +58,30 @@
             </div>
         </div>
 
+        <br/>
+            <div sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')" class="form-group">
+                <label for="roles" class="col-sm-2 control-label">Roles:</label>
+                <div class="col-sm-10">
+                    <ul>
+                        <li th:each="currentRole : ${roles}">
+                            <input type="checkbox" th:field="*{theRoles}" th:value="${currentRole.name}" />
+                            <label th:for="${#ids.prev('theRoles')}"
+                                   th:text="${currentRole.name}">Heating</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
         <div class="form-group">
 
-            <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary btn-lg active">Register</button>
+            <div class="col-sm-10 col-sm-offset-2">
+                <button type="submit" class="btn btn-primary active">Register</button>
             </div>
         </div>
 
-</form>
+    </form>
 
 </div>
 </body>

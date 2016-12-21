@@ -12,6 +12,7 @@ import com.tu.ziik.lms.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,16 +25,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
+
+
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        
-        List<Role> roles = new ArrayList<>();
-        
-        Role admin = new Role();
-        admin.setName("ROLE_ADMIN");
-        
-        roles.add(admin);
-        
-        user.setRoles(new HashSet<>(roleRepository.findByName("ROLE_USER")));
+
+        Set<Role> theRoles = new HashSet<>();
+
+        if (user.getTheRoles() != null) {
+            for (String currentRole : user.getTheRoles()) {
+                theRoles.addAll(roleRepository.findByName(currentRole));
+            }
+
+        }else {
+            theRoles.addAll(roleRepository.findByName("ROLE_USER"));
+        }
+
+
+        //user.setRoles(new HashSet<>(roleRepository.findByName("ROLE_USER")));
+        user.setRoles(theRoles);
         userRepository.save(user);
     }
 
