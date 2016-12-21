@@ -2,6 +2,7 @@ package com.tu.ziik.lms.controllers;
 
 import com.tu.ziik.lms.model.Role;
 import com.tu.ziik.lms.repository.RoleRepository;
+import com.tu.ziik.lms.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -30,14 +31,26 @@ public class UserController {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
 
     UserDetails details;
 
     @Autowired
     private UserValidator userValidator;
 
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public String listUsers(Model model) {
+
+
+
+        model.addAttribute("users", userRepository.findAll());
+        return "user-list";
+    }
+
     @RequestMapping(value = "/user/register", method = RequestMethod.GET)
-    public String registerUser(Model model){
+    public String registerUser(Model model) {
         model.addAttribute("userForm", new User());
 
         model.addAttribute("roles", roleRepository.findAll());
@@ -45,7 +58,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
-    public String registerUser(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model){
+    public String registerUser(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
 
         userValidator.validate(userForm, bindingResult);
 
@@ -95,7 +108,6 @@ public class UserController {
 //
 //        return "registration";
 //    }
-
 
 
 //    @RequestMapping(value = "/registration", method = RequestMethod.POST)

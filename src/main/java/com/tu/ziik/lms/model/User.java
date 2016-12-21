@@ -20,6 +20,7 @@ public class User {
 
     private ArrayList<String> theRoles;
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {

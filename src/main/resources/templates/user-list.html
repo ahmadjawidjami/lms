@@ -1,0 +1,53 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <title tiles:fragment="title">Messages : Create</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+
+<div sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')" class="container">
+
+    <div class="col-md-6">
+        <H2>Users</H2>
+
+        <a th:href="@{/user/register}">Register new user</a>
+
+        <table class="table table-bordered">
+
+            <thead>
+            <td>Number</td>
+            <td>Username</td>
+            <td>Roles</td>
+            </thead>
+
+            <th:block th:each="user, count : ${users}">
+
+                <tr>
+
+
+                    <td th:text="${count.count}">0</td>
+                    <td th:text="${user.username}"></td>
+                    <td>
+                <span th:each="role : ${user.roles}">
+                [<span th:text="${role.name + ''}"></span>]
+                </span>
+
+
+                    </td>
+
+                </tr>
+
+            </th:block>
+
+        </table>
+
+    </div>
+
+
+</div>
+</body>
+</html>
