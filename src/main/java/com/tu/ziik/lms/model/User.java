@@ -1,11 +1,9 @@
 package com.tu.ziik.lms.model;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,7 +19,7 @@ public class User {
 
 
     @Version
-    private String version;
+    private Integer version;
 
 
     private ArrayList<String> theRoles;
@@ -81,11 +79,11 @@ public class User {
         this.theRoles = theRoles;
     }
 
-    public String getVersion() {
+    public Integer getVersion() {
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion(Integer version) {
         this.version = version;
     }
 }
