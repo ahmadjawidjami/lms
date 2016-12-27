@@ -14,6 +14,7 @@ public class CourseCategory {
 
     private String name;
 
+
     public String getName() {
         return name;
     }

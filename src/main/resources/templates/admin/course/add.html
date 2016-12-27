@@ -16,15 +16,47 @@
         <h1>Add Course</h1>
     </div>
 
+    <form class="form-horizontal" th:object="${courseCategory}" th:action="@{/admin/course/add-category}" method="post">
+        <div class="form-group">
+            <div th:if="${success}">
+                <h4 th:text="${success}" class="alert alert-success">Category successfully added</h4>
+            </div>
+            <div th:if="${error}">
+                <h4 th:text="${error}" class="alert alert-danger">Category successfully added</h4>
+            </div>
+            <script>
+                function showCategoryForm(){
+                    var category = document.getElementById("category-name");
+                    var submitCategory = document.getElementById("category-submit");
+
+                    category.setAttribute("type", "text");
+                    submitCategory.setAttribute("type", "submit");
+                }
+            </script>
+
+
+            <label for="category" class="col-sm-2 control-label"><button type="button" class="btn" onclick="showCategoryForm()">Add category</button></label>
+            <div class="col-sm-10">
+                <input type="hidden" class="form-control" name="name" id="category-name"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-10 col-sm-offset-2">
+                <input type="hidden" id="category-submit" value="Add" class="btn btn-primary active"/>
+            </div>
+        </div>
+
+    </form>
+
     <form class="form-horizontal" name="f" th:object="${course}" th:action="@{/admin/course/add}" method="post">
 
         <div class="form-group">
-
             <input type="hidden" th:field="*{id}"/>
             <input type="hidden" th:field="*{version}"/>
             <label for="title" class="col-sm-2 control-label">Title:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" th:field="*{title}"/>
+                <input type="text" class="form-control" id="title" th:field="*{title}"/>
 
             </div>
         </div>
@@ -39,7 +71,17 @@
         </div>
 
         <div class="form-group">
+            <label for="category" class="col-sm-2 control-label">Category:</label>
+            <div class="col-sm-10">
+                <select name="category">
+                    <option>First</option>
+                    <option>Second</option>
+                    <option>Third</option>
+                </select>
+            </div>
+        </div>
 
+        <div class="form-group">
             <div class="col-sm-10 col-sm-offset-2">
                 <button type="submit" class="btn btn-primary active">Add</button>
             </div>
