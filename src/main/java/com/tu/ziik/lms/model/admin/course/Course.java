@@ -21,6 +21,8 @@ public class Course {
 
     private String content;
 
+    private String category;
+
     @Version
     private Integer version;
 
@@ -54,5 +56,13 @@ public class Course {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

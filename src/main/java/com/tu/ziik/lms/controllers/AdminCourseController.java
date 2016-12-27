@@ -33,6 +33,7 @@ public class AdminCourseController {
 
         model.addAttribute("course", new Course());
         //model.addAttribute("category", new CourseCategory());
+        model.addAttribute("categories", adminCourseService.findAllCategories());
         return "admin/course/add";
     }
 

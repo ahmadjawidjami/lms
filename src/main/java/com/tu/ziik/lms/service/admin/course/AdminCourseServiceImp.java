@@ -5,6 +5,8 @@ import com.tu.ziik.lms.repository.CourseCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by ahmadjawid on 12/27/16.
  */
@@ -28,5 +30,10 @@ public class AdminCourseServiceImp implements AdminCourseService {
         if (categoryRepository.findByName(name).isEmpty())
             return false;
         return true;
+    }
+
+    @Override
+    public List<CourseCategory> findAllCategories() {
+        return categoryRepository.findAll();
     }
 }
