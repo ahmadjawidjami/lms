@@ -1,7 +1,9 @@
 package com.tu.ziik.lms.service.admin.course;
 
+import com.tu.ziik.lms.model.admin.course.Course;
 import com.tu.ziik.lms.model.admin.course.CourseCategory;
 import com.tu.ziik.lms.repository.CourseCategoryRepository;
+import com.tu.ziik.lms.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,9 @@ public class AdminCourseServiceImp implements AdminCourseService {
     @Autowired
     private CourseCategoryRepository categoryRepository;
 
+    @Autowired
+    private CourseRepository courseRepository;
+
     @Override
     public void saveCategory(CourseCategory courseCategory) {
 
@@ -27,7 +32,7 @@ public class AdminCourseServiceImp implements AdminCourseService {
     @Override
     public boolean categoryExists(String name) {
 
-        if (categoryRepository.findByName(name).isEmpty())
+        if (categoryRepository.findByName(name) == null)
             return false;
         return true;
     }
@@ -35,5 +40,18 @@ public class AdminCourseServiceImp implements AdminCourseService {
     @Override
     public List<CourseCategory> findAllCategories() {
         return categoryRepository.findAll();
+    }
+
+    @Override
+    public void saveCourse(Course course) {
+
+        course.setCourseCategory(categoryRepository.findByName(course.getCategory()));
+        courseRepository.save(course);
+
+    }
+
+    @Override
+    public List<Course> findAllCourses() {
+        return courseRepository.findAll();
     }
 }

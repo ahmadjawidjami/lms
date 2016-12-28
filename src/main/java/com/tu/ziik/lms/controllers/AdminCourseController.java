@@ -23,7 +23,8 @@ public class AdminCourseController {
 
 
     @RequestMapping(value = "/admin/course/list", method = RequestMethod.GET)
-    public String listCourses(){
+    public String listCourses(Model model){
+        model.addAttribute("courses", adminCourseService.findAllCourses());
         return "admin/course/course-list";
     }
 
@@ -35,6 +36,14 @@ public class AdminCourseController {
         //model.addAttribute("category", new CourseCategory());
         model.addAttribute("categories", adminCourseService.findAllCategories());
         return "admin/course/add";
+    }
+
+
+    @RequestMapping(value = "/admin/course/add", method = RequestMethod.POST)
+    public String addCourse(@ModelAttribute("course") Course course){
+
+        adminCourseService.saveCourse(course);
+        return "redirect:/admin/course/list";
     }
 
 

@@ -12,12 +12,12 @@ import javax.persistence.Id;
 @Entity
 public class Course {
     private Long id;
-    //private String name;
     private String title;
 //
 //
  private String content;
 //
+
    private String category;
 //
    @Version
@@ -63,6 +63,8 @@ public class Course {
         this.content = content;
     }
 
+
+    @Transient
     public String getCategory() {
         return category;
     }

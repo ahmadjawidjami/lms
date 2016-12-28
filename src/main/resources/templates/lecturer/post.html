@@ -1,0 +1,93 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+          th:href="@{'/css/bootstrap.min.css'}"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            th:src="@{'/js/bootstrap.min.js'}"></script>
+</head>
+<body>
+
+
+<div class="container">
+
+    <div th:class="jumbotron">
+        <h1>Add post</h1>
+    </div>
+
+    <form class="form-horizontal" th:action="@{/admin/course/add-category}" method="post">
+        <div class="form-group">
+            <div th:if="${success}">
+                <h4 th:text="${success}" class="alert alert-success">Category successfully added</h4>
+            </div>
+            <div th:if="${error}">
+                <h4 th:text="${error}" class="alert alert-danger">Category successfully added</h4>
+            </div>
+            <script>
+                function showCategoryForm() {
+                    var category = document.getElementById("category-name");
+                    var submitCategory = document.getElementById("category-submit");
+
+                    category.setAttribute("type", "text");
+                    submitCategory.setAttribute("type", "submit");
+                }
+            </script>
+
+
+            <label for="category" class="col-sm-2 control-label">
+                <button type="button" class="btn" onclick="showCategoryForm()">Add category</button>
+            </label>
+            <div class="col-sm-10">
+                <input type="hidden" class="form-control" name="name" id="category-name"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-10 col-sm-offset-2">
+                <input type="hidden" id="category-submit" value="Add" class="btn btn-primary active"/>
+            </div>
+        </div>
+
+    </form>
+
+    <form class="form-horizontal" name="f" th:object="${post}" th:action="@{/lecturer/post/add}" method="post">
+
+        <div class="form-group">
+
+            <label for="title" class="col-sm-2 control-label">Title:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{title}"/>
+
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="type" class="col-sm-2 control-label">Type:</label>
+            <div class="col-sm-10">
+                <select name="type" id="type">
+                    <option>Lecture</option>
+                    <option>Assignment</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputFile">File input</label>
+            <div class="col-sm-10 col-sm-offset-2">
+                <input type="file" id="exampleInputFile"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-10 col-sm-offset-2">
+                <button type="submit" class="btn btn-primary active">Add</button>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+</body>
+</html>

@@ -12,5 +12,5 @@ import java.util.List;
 @Repository
 public interface CourseCategoryRepository extends JpaRepository <CourseCategory, Long> {
 
-    List<CourseCategory> findByName(String categoryName);
+    CourseCategory findByName(String categoryName);
 }
