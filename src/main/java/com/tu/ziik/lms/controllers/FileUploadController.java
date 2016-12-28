@@ -1,5 +1,6 @@
 package com.tu.ziik.lms.controllers;
 
+import com.tu.ziik.lms.model.lecturer.Post;
 import com.tu.ziik.lms.storage.StorageFileNotFoundException;
 import com.tu.ziik.lms.storage.StorageService;
 
@@ -27,8 +28,10 @@ public class FileUploadController {
         this.storageService = storageService;
     }
 
-    @GetMapping("/files/list")
+    @GetMapping("/lecturer/course/post-list")
     public String listUploadedFiles(Model model) throws IOException {
+
+        model.addAttribute("post", new Post());
 
         model.addAttribute("files", storageService
                 .loadAll()
@@ -41,7 +44,7 @@ public class FileUploadController {
         return "uploadForm";
     }
 
-    @GetMapping("/files/{filename:.+}")
+    @GetMapping("/lecturer/course/post-list/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
 
@@ -52,15 +55,20 @@ public class FileUploadController {
                 .body(file);
     }
 
-    @PostMapping("/file/upload")
+    @PostMapping("/lecturer/course/post")
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
+                                   @ModelAttribute("post") Post post,
                                    RedirectAttributes redirectAttributes) {
 
-        storageService.store(file);
+       // post.setFilePath("course/" + post.getType() + "/" + post.getTitle());
+
+        post.setFilePath(storageService.createFilePath(file, post));
+
+        storageService.store(file, post.getFilePath());
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
 
-        return "redirect:/files/list";
+        return "redirect:/lecturer/course/post-list";
     }
 
     @ExceptionHandler(StorageFileNotFoundException.class)

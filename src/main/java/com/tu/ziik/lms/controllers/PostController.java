@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class PostController {
 
 
-    @RequestMapping(value = "/lecturer/course/post", method = RequestMethod.GET)
+    //@RequestMapping(value = "/lecturer/course/post", method = RequestMethod.GET)
     public String addPost(Model model){
         model.addAttribute("post", new Post());
         return "lecturer/post";

@@ -1,5 +1,6 @@
 package com.tu.ziik.lms.storage;
 
+import com.tu.ziik.lms.model.lecturer.Post;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,7 +11,7 @@ public interface StorageService {
 
     void init();
 
-    void store(MultipartFile file);
+    void store(MultipartFile file, String filePath);
 
     Stream<Path> loadAll();
 
@@ -19,5 +20,7 @@ public interface StorageService {
     Resource loadAsResource(String filename);
 
     void deleteAll();
+
+    String createFilePath(MultipartFile file, Post post);
 
 }

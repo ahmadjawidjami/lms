@@ -1,12 +1,15 @@
 package com.tu.ziik.lms.storage;
 
+import com.tu.ziik.lms.model.lecturer.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -25,15 +28,25 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public void store(MultipartFile file) {
+    public void store(MultipartFile file, String filePath) {
         try {
             if (file.isEmpty()) {
                 throw new StorageException("Failed to store empty file " + file.getOriginalFilename());
             }
-            Files.copy(file.getInputStream(), this.rootLocation.resolve(file.getOriginalFilename()));
+            //createDirsIfNotExist(filePath);
+            Files.copy(file.getInputStream(), this.rootLocation.resolve(filePath));
         } catch (IOException e) {
             throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
         }
+    }
+
+    private void createDirsIfNotExist(String filePath) {
+        File dir = new File(rootLocation.toString() + "/" + filePath);
+
+        if (!dir.exists()){
+            dir.mkdirs();
+        }
+
     }
 
     @Override
@@ -73,6 +86,17 @@ public class FileSystemStorageService implements StorageService {
     @Override
     public void deleteAll() {
         FileSystemUtils.deleteRecursively(rootLocation.toFile());
+    }
+
+    @Override
+    public String createFilePath(MultipartFile file, Post post) {
+
+        String directoryPath = "course/" + post.getType();
+
+        createDirsIfNotExist(directoryPath);
+
+        return directoryPath + "/" + post.getTitle() + "." +
+                StringUtils.getFilenameExtension(file.getOriginalFilename());
     }
 
     @Override

@@ -18,6 +18,7 @@ public class Post {
     private Long id;
     private String title;
     private String type;
+    private String filePath;
 
     public Long getId() {
         return id;
@@ -41,5 +42,13 @@ public class Post {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 }
