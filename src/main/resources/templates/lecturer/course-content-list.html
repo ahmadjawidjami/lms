@@ -1,0 +1,30 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+          th:href="@{'/css/bootstrap.min.css'}"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            th:src="@{'/js/bootstrap.min.js'}"></script>
+</head>
+<body>
+
+
+<div th:if="${message}">
+    <h2 th:text="${message}"/>
+</div>
+
+<div class="container">
+
+    <div th:class="jumbotron">
+        <h1>Add post</h1>
+    </div>
+
+
+    <a th:href="@{'/lecturer/course/'+${courseId}+'/add'}">Add post</a>
+
+
+
+</div>
+</body>
+</html>

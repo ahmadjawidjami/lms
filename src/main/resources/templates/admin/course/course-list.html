@@ -23,7 +23,7 @@
             <div class="col-sm-10">
                 <ul th:each="currentCourse : ${courses}">
                     <li>
-                        <h2><a href="#" ><span th:text="${currentCourse.title}"></span></a></h2>
+                        <h2><a th:href="@{'/lecturer/course/'+${currentCourse.id}+'/list'}" ><span th:text="${currentCourse.title}"></span></a></h2>
                     </li>
                 </ul>
             </div>

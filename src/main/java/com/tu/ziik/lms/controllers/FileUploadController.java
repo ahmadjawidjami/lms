@@ -28,18 +28,38 @@ public class FileUploadController {
         this.storageService = storageService;
     }
 
-    @GetMapping("/lecturer/course/post-list")
-    public String listUploadedFiles(Model model) throws IOException {
 
+    @RequestMapping(value = "/lecturer/course/{id}/list", method = RequestMethod.GET)
+    public String listCourseContent(@PathVariable Long id, Model model){
+
+
+        model.addAttribute("courseId", id);
+        return "/lecturer/course-content-list";
+    }
+
+    @RequestMapping(value = "/lecturer/course/{id}/add", method = RequestMethod.GET)
+    public String addCourseContent(@PathVariable Long id, Model model){
+
+        model.addAttribute("courseId", id);
         model.addAttribute("post", new Post());
 
-        model.addAttribute("files", storageService
-                .loadAll()
-                .map(path ->
-                        MvcUriComponentsBuilder
-                                .fromMethodName(FileUploadController.class, "serveFile", path.getFileName().toString())
-                                .build().toString())
-                .collect(Collectors.toList()));
+        return "lecturer/course/add-content";
+
+
+    }
+
+    @GetMapping("/lecturer/course/post-list")
+    public String listUploadedFiles() throws IOException {
+
+        //model.addAttribute("post", new Post());
+
+//        model.addAttribute("files", storageService
+//                .loadAll()
+//                .map(path ->
+//                        MvcUriComponentsBuilder
+//                                .fromMethodName(FileUploadController.class, "serveFile", path.getFileName().toString())
+//                                .build().toString())
+//                .collect(Collectors.toList()));
 
         return "uploadForm";
     }

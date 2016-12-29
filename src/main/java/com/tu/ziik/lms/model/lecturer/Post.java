@@ -17,7 +17,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
-    private String type;
+    private String description;
     private String filePath;
 
     public Long getId() {
@@ -36,12 +36,12 @@ public class Post {
         this.title = title;
     }
 
-    public String getType() {
-        return type;
+    public String getDescription() {
+        return description;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getFilePath() {

@@ -91,12 +91,13 @@ public class FileSystemStorageService implements StorageService {
     @Override
     public String createFilePath(MultipartFile file, Post post) {
 
-        String directoryPath = "course/" + post.getType();
+        //String directoryPath = "course/" + post.getType();
 
-        createDirsIfNotExist(directoryPath);
+        //createDirsIfNotExist(directoryPath);
 
-        return directoryPath + "/" + post.getTitle() + "." +
-                StringUtils.getFilenameExtension(file.getOriginalFilename());
+       // return directoryPath + "/" + post.getTitle() + "." +
+             //   StringUtils.getFilenameExtension(file.getOriginalFilename());
+        return "";
     }
 
     @Override
