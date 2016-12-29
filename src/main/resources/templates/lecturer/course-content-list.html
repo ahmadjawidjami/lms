@@ -10,19 +10,28 @@
 <body>
 
 
-<div th:if="${message}">
-    <h2 th:text="${message}"/>
+<div th:if="${success}">
+    <h2 th:text="${success}"/>
+</div>
+
+<div th:if="${error}">
+    <h2 th:text="${error}"/>
 </div>
 
 <div class="container">
 
     <div th:class="jumbotron">
-        <h1>Add post</h1>
+        <h1 th:text="${courseTitle}">Course title</h1>
     </div>
 
 
     <a th:href="@{'/lecturer/course/'+${courseId}+'/add'}">Add post</a>
 
+    <div th:each="post : ${posts}">
+        <h3 th:text="${post.title}"></h3>
+        <p th:text="${post.description}"></p>
+        <a href="#">Lecture 1</a>
+    </div>
 
 
 </div>

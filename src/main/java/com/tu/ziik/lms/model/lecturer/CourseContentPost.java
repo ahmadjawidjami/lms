@@ -1,9 +1,8 @@
 package com.tu.ziik.lms.model.lecturer;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.tu.ziik.lms.model.admin.course.Course;
+
+import javax.persistence.*;
 
 /**
  * Created by ahmadjawid on 12/28/16.
@@ -13,13 +12,16 @@ import javax.persistence.Id;
 public class CourseContentPost {
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private Long id;
     private String title;
     private String description;
     private String filePath;
 
+    private Course course;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
         return id;
     }
@@ -50,5 +52,15 @@ public class CourseContentPost {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    public Course getCourse(){
+        return course;
+    }
+
+    public void setCourse(Course course){
+        this.course = course;
     }
 }

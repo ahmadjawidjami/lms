@@ -2,8 +2,11 @@ package com.tu.ziik.lms.model.admin.course;
 
 
 
+import com.tu.ziik.lms.model.lecturer.CourseContentPost;
+
 import javax.persistence.*;
 import javax.persistence.Id;
+import java.util.Set;
 
 /**
  * Created by ahmadjawid on 12/23/16.
@@ -23,6 +26,8 @@ public class Course {
    @Version
     private Integer version;
     private CourseCategory courseCategory;
+
+    private Set<CourseContentPost> courseContentPosts;
 
 //    public Course() {
 //
@@ -89,6 +94,15 @@ public class Course {
 
     public void setCourseCategory(CourseCategory courseCategory) {
         this.courseCategory = courseCategory;
+    }
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    public Set<CourseContentPost> getCourseContentPosts(){
+        return courseContentPosts;
+    }
+
+    public void setCourseContentPosts(Set<CourseContentPost> courseContentPosts) {
+        this.courseContentPosts = courseContentPosts;
     }
 }
 
