@@ -1,12 +1,11 @@
 package com.tu.ziik.lms.storage;
 
-import com.tu.ziik.lms.model.lecturer.Post;
+import com.tu.ziik.lms.model.lecturer.CourseContentPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -89,13 +88,13 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public String createFilePath(MultipartFile file, Post post) {
+    public String createFilePath(MultipartFile file, CourseContentPost courseContentPost) {
 
-        //String directoryPath = "course/" + post.getType();
+        //String directoryPath = "course/" + courseContentPost.getType();
 
         //createDirsIfNotExist(directoryPath);
 
-       // return directoryPath + "/" + post.getTitle() + "." +
+       // return directoryPath + "/" + courseContentPost.getTitle() + "." +
              //   StringUtils.getFilenameExtension(file.getOriginalFilename());
         return "";
     }

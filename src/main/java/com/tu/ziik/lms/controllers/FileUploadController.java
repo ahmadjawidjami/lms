@@ -1,6 +1,6 @@
 package com.tu.ziik.lms.controllers;
 
-import com.tu.ziik.lms.model.lecturer.Post;
+import com.tu.ziik.lms.model.lecturer.CourseContentPost;
 import com.tu.ziik.lms.storage.StorageFileNotFoundException;
 import com.tu.ziik.lms.storage.StorageService;
 
@@ -12,11 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.util.stream.Collectors;
 
 @Controller
 public class FileUploadController {
@@ -41,7 +39,7 @@ public class FileUploadController {
     public String addCourseContent(@PathVariable Long id, Model model){
 
         model.addAttribute("courseId", id);
-        model.addAttribute("post", new Post());
+        model.addAttribute("post", new CourseContentPost());
 
         return "lecturer/course/add-content";
 
@@ -51,7 +49,7 @@ public class FileUploadController {
     @GetMapping("/lecturer/course/post-list")
     public String listUploadedFiles() throws IOException {
 
-        //model.addAttribute("post", new Post());
+        //model.addAttribute("post", new CourseContentPost());
 
 //        model.addAttribute("files", storageService
 //                .loadAll()
@@ -75,20 +73,20 @@ public class FileUploadController {
                 .body(file);
     }
 
-    @PostMapping("/lecturer/course/post")
+    @PostMapping("/lecturer/course/courseContentPost")
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
-                                   @ModelAttribute("post") Post post,
+                                   @ModelAttribute("post") CourseContentPost courseContentPost,
                                    RedirectAttributes redirectAttributes) {
 
-       // post.setFilePath("course/" + post.getType() + "/" + post.getTitle());
+       // courseContentPost.setFilePath("course/" + courseContentPost.getType() + "/" + courseContentPost.getTitle());
 
-        post.setFilePath(storageService.createFilePath(file, post));
+        courseContentPost.setFilePath(storageService.createFilePath(file, courseContentPost));
 
-        storageService.store(file, post.getFilePath());
+        storageService.store(file, courseContentPost.getFilePath());
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
 
-        return "redirect:/lecturer/course/post-list";
+        return "redirect:/lecturer/course/courseContentPost-list";
     }
 
     @ExceptionHandler(StorageFileNotFoundException.class)
