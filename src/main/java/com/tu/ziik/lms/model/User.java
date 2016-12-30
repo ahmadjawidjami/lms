@@ -2,6 +2,7 @@ package com.tu.ziik.lms.model;
 
 
 
+import com.tu.ziik.lms.model.admin.course.Course;
 import com.tu.ziik.lms.model.lecturer.CourseContentPost;
 
 import javax.persistence.*;
@@ -19,6 +20,8 @@ public class User {
     private Set<Role> roles;
 
     private Set<CourseContentPost> courseContentPosts;
+
+    private Set<Course> courses;
 
 
 
@@ -81,6 +84,15 @@ public class User {
 
     public void setCourseContentPosts(Set<CourseContentPost> courseContentPosts){
         this.courseContentPosts = courseContentPosts;
+    }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    public Set<Course> getCourses(){
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses){
+        this.courses = courses;
     }
 
     @Transient

@@ -4,6 +4,7 @@ import com.tu.ziik.lms.model.admin.course.Course;
 import com.tu.ziik.lms.model.lecturer.CourseContentPost;
 import com.tu.ziik.lms.repository.CourseContentPostRepository;
 import com.tu.ziik.lms.repository.CourseRepository;
+import com.tu.ziik.lms.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,9 @@ public class CourseContentPostServiceImpl implements CourseContentPostService {
 
     @Autowired
     private CourseRepository courseRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public void savePost(CourseContentPost courseContentPost) {
@@ -46,7 +50,14 @@ public class CourseContentPostServiceImpl implements CourseContentPostService {
     }
 
     @Override
-    public List<CourseContentPost> findAllPostsById(Long courseId) {
-        return postRepository.findByCourse(courseRepository.findOne(courseId));
+    public List<CourseContentPost> findAllPostsByCourseIdAndUsername(Long courseId, String username) {
+        return postRepository.findByCourseAndUser(courseRepository.findOne(courseId), userRepository.findByUsername(username));
+    }
+
+    @Override
+    public void setUser(CourseContentPost courseContentPost, String username) {
+
+        courseContentPost.setUser(userRepository.findByUsername(username));
+
     }
 }

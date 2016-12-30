@@ -18,5 +18,5 @@ public interface AdminCourseService {
 
     void saveCourse(Course course);
 
-    List<Course> findAllCourses();
+    List<Course> findAllCoursesByUsername(String username);
 }

@@ -1,5 +1,6 @@
 package com.tu.ziik.lms.repository;
 
+import com.tu.ziik.lms.model.User;
 import com.tu.ziik.lms.model.admin.course.Course;
 import com.tu.ziik.lms.model.lecturer.CourseContentPost;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,5 +15,5 @@ import java.util.List;
 @Repository
 public interface CourseContentPostRepository extends JpaRepository<CourseContentPost, Long> {
 
-    List<CourseContentPost> findByCourse(Course course);
+    List<CourseContentPost> findByCourseAndUser(Course course, User user);
 }

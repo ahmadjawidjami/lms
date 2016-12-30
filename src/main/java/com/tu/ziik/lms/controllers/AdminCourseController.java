@@ -2,8 +2,12 @@ package com.tu.ziik.lms.controllers;
 
 import com.tu.ziik.lms.model.admin.course.Course;
 import com.tu.ziik.lms.model.admin.course.CourseCategory;
+import com.tu.ziik.lms.service.SecurityService;
 import com.tu.ziik.lms.service.admin.course.AdminCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.support.SecurityContextProvider;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,10 +25,16 @@ public class AdminCourseController {
     @Autowired
     private AdminCourseService adminCourseService;
 
+    @Autowired
+    SecurityService securityService;
+
 
     @RequestMapping(value = "/admin/course/list", method = RequestMethod.GET)
     public String listCourses(Model model){
-        model.addAttribute("courses", adminCourseService.findAllCourses());
+
+        String username = securityService.findLoggedInUsername();
+
+        model.addAttribute("courses", adminCourseService.findAllCoursesByUsername(username));
         return "admin/course/course-list";
     }
 

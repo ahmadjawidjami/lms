@@ -2,6 +2,7 @@ package com.tu.ziik.lms.model.admin.course;
 
 
 
+import com.tu.ziik.lms.model.User;
 import com.tu.ziik.lms.model.lecturer.CourseContentPost;
 
 import javax.persistence.*;
@@ -28,6 +29,8 @@ public class Course {
     private CourseCategory courseCategory;
 
     private Set<CourseContentPost> courseContentPosts;
+
+    private User user;
 
 //    public Course() {
 //
@@ -103,6 +106,16 @@ public class Course {
 
     public void setCourseContentPosts(Set<CourseContentPost> courseContentPosts) {
         this.courseContentPosts = courseContentPosts;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    public User getUser(){
+        return user;
+    }
+
+    public void setUser(User user){
+        this.user = user;
     }
 }
 

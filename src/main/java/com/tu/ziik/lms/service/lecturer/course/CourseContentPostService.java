@@ -1,5 +1,6 @@
 package com.tu.ziik.lms.service.lecturer.course;
 
+import com.tu.ziik.lms.model.User;
 import com.tu.ziik.lms.model.admin.course.Course;
 import com.tu.ziik.lms.model.lecturer.CourseContentPost;
 
@@ -17,5 +18,7 @@ public interface CourseContentPostService {
 
     List<CourseContentPost> findAllPosts();
 
-    List<CourseContentPost> findAllPostsById(Long courseId);
+    List<CourseContentPost> findAllPostsByCourseIdAndUsername(Long courseId, String username);
+
+    void setUser(CourseContentPost courseContentPost, String userId);
 }
