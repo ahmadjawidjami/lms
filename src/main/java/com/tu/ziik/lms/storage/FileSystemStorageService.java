@@ -1,6 +1,5 @@
 package com.tu.ziik.lms.storage;
 
-import com.tu.ziik.lms.model.lecturer.CourseContentPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -32,33 +31,12 @@ public class FileSystemStorageService implements StorageService {
             if (file.isEmpty()) {
                 throw new StorageException("Failed to store empty file " + file.getOriginalFilename());
             }
-            //createDirsIfNotExist(filePath);
-            Files.copy(file.getInputStream(), this.rootLocation.resolve(filePath));
+            Files.copy(file.getInputStream(), Paths.get(rootLocation.toString()+filePath));
         } catch (IOException e) {
             throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
         }
     }
 
-    private void createDirsIfNotExist(String filePath) {
-        File dir = new File(rootLocation.toString() + "/" + filePath);
-
-        if (!dir.exists()){
-            dir.mkdirs();
-        }
-
-    }
-
-    @Override
-    public Stream<Path> loadAll() {
-        try {
-            return Files.walk(this.rootLocation, 1)
-                    .filter(path -> !path.equals(this.rootLocation))
-                    .map(path -> this.rootLocation.relativize(path));
-        } catch (IOException e) {
-            throw new StorageException("Failed to read stored files", e);
-        }
-
-    }
 
     @Override
     public Path load(String filename) {
@@ -70,10 +48,9 @@ public class FileSystemStorageService implements StorageService {
         try {
             Path file = load(filename);
             Resource resource = new UrlResource(file.toUri());
-            if(resource.exists() || resource.isReadable()) {
+            if (resource.exists() || resource.isReadable()) {
                 return resource;
-            }
-            else {
+            } else {
                 throw new StorageFileNotFoundException("Could not read file: " + filename);
 
             }
@@ -83,21 +60,27 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
+    public String createFilePath(MultipartFile file, Long courseId) {
+        String directoryPath = "/course/" + courseId + "/";
+
+        createDirsIfNotExist(directoryPath);
+
+        return directoryPath + file.getOriginalFilename();
+    }
+
+    private void createDirsIfNotExist(String filePath) {
+        File dir = new File(rootLocation.toString() + "/" + filePath);
+
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+    }
+
+    @Override
     public void deleteAll() {
         FileSystemUtils.deleteRecursively(rootLocation.toFile());
     }
 
-    @Override
-    public String createFilePath(MultipartFile file, CourseContentPost courseContentPost) {
-
-        //String directoryPath = "course/" + courseContentPost.getType();
-
-        //createDirsIfNotExist(directoryPath);
-
-       // return directoryPath + "/" + courseContentPost.getTitle() + "." +
-             //   StringUtils.getFilenameExtension(file.getOriginalFilename());
-        return "";
-    }
 
     @Override
     public void init() {
@@ -107,4 +90,17 @@ public class FileSystemStorageService implements StorageService {
             throw new StorageException("Could not initialize storage", e);
         }
     }
+
+
+    //    @Override
+//    public Stream<Path> loadAll(Long courseId) {
+//        try {
+//            return Files.walk(Paths.get(rootLocation.toString() + "/" + "course/" + courseId), 1)
+//                    .filter(path -> !path.equals(this.rootLocation))
+//                    .map(path -> this.rootLocation.relativize(path));
+//        } catch (IOException e) {
+//            throw new StorageException("Failed to read stored files", e);
+//        }
+//
+//    }
 }

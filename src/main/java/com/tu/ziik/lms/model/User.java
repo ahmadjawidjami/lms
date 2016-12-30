@@ -2,6 +2,8 @@ package com.tu.ziik.lms.model;
 
 
 
+import com.tu.ziik.lms.model.lecturer.CourseContentPost;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Set;
@@ -10,11 +12,13 @@ import java.util.Set;
 @Table(name = "user")
 public class User {
     private Long id;
-    //@Column( unique=true, nullable=false )
+    @Column( unique=true, nullable=false )
     private String username;
     private String password;
     private String passwordConfirm;
     private Set<Role> roles;
+
+    private Set<CourseContentPost> courseContentPosts;
 
 
 
@@ -68,6 +72,15 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    public Set<CourseContentPost> getCourseContentPosts(){
+        return courseContentPosts;
+    }
+
+    public void setCourseContentPosts(Set<CourseContentPost> courseContentPosts){
+        this.courseContentPosts = courseContentPosts;
     }
 
     @Transient

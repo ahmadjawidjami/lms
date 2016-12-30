@@ -1,5 +1,6 @@
 package com.tu.ziik.lms.model.lecturer;
 
+import com.tu.ziik.lms.model.User;
 import com.tu.ziik.lms.model.admin.course.Course;
 
 import javax.persistence.*;
@@ -16,9 +17,12 @@ public class CourseContentPost {
     private Long id;
     private String title;
     private String description;
+    private String fileName;
     private String filePath;
 
     private Course course;
+
+    private User user;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,6 +46,14 @@ public class CourseContentPost {
         return description;
     }
 
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -62,5 +74,15 @@ public class CourseContentPost {
 
     public void setCourse(Course course){
         this.course = course;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    public User getUser(){
+        return user;
+    }
+
+    public void setUser(User user){
+        this.user = user;
     }
 }

@@ -13,14 +13,14 @@ public interface StorageService {
 
     void store(MultipartFile file, String filePath);
 
-    Stream<Path> loadAll();
+    //Stream<Path> loadAll(Long courseId);
 
     Path load(String filename);
 
     Resource loadAsResource(String filename);
 
-    void deleteAll();
+   void deleteAll();
 
-    String createFilePath(MultipartFile file, CourseContentPost courseContentPost);
+    String createFilePath(MultipartFile file, Long courseContentPost);
 
 }
