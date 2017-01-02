@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +36,7 @@ public class FileUploadController {
     @RequestMapping(value = "/lecturer/course/{courseId}/list", method = RequestMethod.GET)
     public String listCourseContent(@PathVariable Long courseId, Model model) {
         String courseTitle = postService.findCourseById(courseId).getTitle();
-        String username = securityService.findLoggedInUsername();
+        String username = securityService.findAuthenticatedUsername();
 
         model.addAttribute("posts", postService.findAllPostsByCourseIdAndUsername(courseId, username));
         model.addAttribute("courseId", courseId);
@@ -79,7 +77,7 @@ public class FileUploadController {
             storageService.store(file, courseContentPost.getFilePath());
         }
 
-        String username = securityService.findLoggedInUsername();
+        String username = securityService.findAuthenticatedUsername();
 
         postService.setUser(courseContentPost, username);
 

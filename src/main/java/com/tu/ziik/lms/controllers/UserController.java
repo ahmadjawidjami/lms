@@ -1,10 +1,7 @@
 package com.tu.ziik.lms.controllers;
 
-import com.tu.ziik.lms.model.Role;
 import com.tu.ziik.lms.repository.RoleRepository;
-import com.tu.ziik.lms.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,9 +14,6 @@ import com.tu.ziik.lms.model.User;
 import com.tu.ziik.lms.service.SecurityService;
 import com.tu.ziik.lms.service.UserService;
 import com.tu.ziik.lms.validator.UserValidator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class UserController {
@@ -63,7 +57,7 @@ public class UserController {
 
         userService.save(userForm);
 
-        securityService.autologin(userForm.getUsername(), userForm.getPasswordConfirm());
+        securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
 
         return "redirect:/welcome";
     }
@@ -140,7 +134,7 @@ public class UserController {
 //
 //        userService.save(userForm);
 //
-//        securityService.autologin(userForm.getUsername(), userForm.getPasswordConfirm());
+//        securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
 //
 //        return "redirect:/welcome";
 //    }

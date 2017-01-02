@@ -1,7 +1,7 @@
 package com.tu.ziik.lms.service;
 
 public interface SecurityService {
-    String findLoggedInUsername();
+    String findAuthenticatedUsername();
 
-    void autologin(String username, String password);
+    void autoLogin(String username, String password);
 }
