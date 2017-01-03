@@ -6,7 +6,7 @@
 	<groupId>com.tu.ziik.lms</groupId>
 	<artifactId>lms</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>lms</name>
 	<description>Lecture Management System</description>
