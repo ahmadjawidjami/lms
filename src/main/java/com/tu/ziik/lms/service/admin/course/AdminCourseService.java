@@ -16,7 +16,7 @@ public interface AdminCourseService {
 
     List<CourseCategory> findAllCategories();
 
-    void saveCourse(Course course);
+    void saveCourse(Course course, String username);
 
     List<Course> findAllCoursesByUsername(String username);
 }

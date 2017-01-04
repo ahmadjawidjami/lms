@@ -47,9 +47,10 @@ public class AdminCourseServiceImp implements AdminCourseService {
     }
 
     @Override
-    public void saveCourse(Course course) {
+    public void saveCourse(Course course, String username) {
 
         course.setCourseCategory(categoryRepository.findByName(course.getCategory()));
+        course.setUser(userRepository.findByUsername(username));
         courseRepository.save(course);
 
     }

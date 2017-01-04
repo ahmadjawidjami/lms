@@ -49,7 +49,8 @@ public class AdminCourseController {
     @RequestMapping(value = "/admin/course/add", method = RequestMethod.POST)
     public String addCourse(@ModelAttribute("course") Course course){
 
-        adminCourseService.saveCourse(course);
+        String username = securityService.findAuthenticatedUsername();
+        adminCourseService.saveCourse(course, username);
         return "redirect:/admin/course/list";
     }
 
