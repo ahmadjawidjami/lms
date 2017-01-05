@@ -254,8 +254,10 @@
                     <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                     </li>
                     <li class="divider"></li>
-                    <li><a href="../login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                    </li>
+                  <form th:action="@{/logout}" method="post">
+                      <li><button type="submit" class="btn btn-link"><a> <i class="fa fa-sign-out fa-fw"></i> Logout</a></button>
+                      </li>
+                  </form>
                 </ul>
                 <!-- /.dropdown-user -->
             </li>
@@ -296,7 +298,10 @@
                         <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
                     </li>
                     <li>
-                        <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
+                        <a th:href="@{/admin/course/list}"><i class="fa fa-edit fa-fw"></i> Courses</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/users}"><i class="fa fa-user fa-fw"></i> Users</a>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
@@ -388,6 +393,7 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="/dist/js/sb-admin-2.js"></script>
+
 
 </th:block>
 

@@ -14,6 +14,7 @@ import com.tu.ziik.lms.model.User;
 import com.tu.ziik.lms.service.SecurityService;
 import com.tu.ziik.lms.service.UserService;
 import com.tu.ziik.lms.validator.UserValidator;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class UserController {
@@ -46,13 +47,14 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
-    public String registerUser(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
+    public String registerUser(@ModelAttribute("userForm") User userForm, BindingResult bindingResult,
+                               RedirectAttributes redirectAttributes) {
 
         userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("roles", roleRepository.findAll());
-            return "register";
+            redirectAttributes.addAttribute("roles", roleRepository.findAll());
+            return "redirect:/login";
         }
 
         userService.save(userForm);
@@ -84,13 +86,14 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model, String error, String logout) {
+        model.addAttribute("userForm", new User());
         if (error != null)
             model.addAttribute("loginInvalidMessage", "Your username and password is invalid.");
 
         if (logout != null)
             model.addAttribute("logoutMessage", "You have been logged out successfully.");
 
-        return "login";
+        return "new-login";
     }
 
     @RequestMapping(value = "/user/forgot", method = RequestMethod.GET)
