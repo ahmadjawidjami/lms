@@ -2,93 +2,149 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org"
       xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
           th:href="@{'/css/bootstrap.min.css'}" />
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            th:src="@{'/js/bootstrap.min.js'}"></script>
+            th:src="@{'/js/bootstrap.min.js'}"></script> -->
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- MetisMenu CSS -->
+    <link href="/vendor/metisMenu/metisMenu.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link href="/dist/css/sb-admin-2.css" rel="stylesheet"/>
+
+    <!-- Custom Fonts -->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <title tiles:fragment="title">Messages : Create</title>
 </head>
 <body>
 
 
-<div class="container">
+<div id="wrapper">
 
-    <div th:class="jumbotron">
-        <h1>Add Course</h1>
+    <div th:replace="fragments/admin-main :: main">
     </div>
 
-    <form class="form-horizontal" th:object="${courseCategory}" th:action="@{/admin/course/add-category}" method="post">
-        <div class="form-group">
-            <div th:if="${success}">
-                <h4 th:text="${success}" class="alert alert-success">Category successfully added</h4>
-            </div>
-            <div th:if="${error}">
-                <h4 th:text="${error}" class="alert alert-danger">Category successfully added</h4>
-            </div>
-            <script>
-                function showCategoryForm(){
-                    var category = document.getElementById("category-name");
-                    var submitCategory = document.getElementById("category-submit");
+    <div id="page-wrapper">
 
-                    category.setAttribute("type", "text");
-                    submitCategory.setAttribute("type", "submit");
-                }
-            </script>
+        <div id="container-fluid">
 
-
-            <label for="category" class="col-sm-2 control-label"><button type="button" class="btn" onclick="showCategoryForm()">Add category</button></label>
-            <div class="col-sm-10">
-                <input type="hidden" class="form-control" name="name" id="category-name"/>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Blank</h1>
+                </div>
+                <!-- /.col-lg-12 -->
             </div>
+
+            <form class="form-horizontal" th:object="${courseCategory}" th:action="@{/admin/course/add-category}" method="post">
+                <div class="form-group">
+                    <div th:if="${success}">
+                        <h4 th:text="${success}" class="alert alert-success">Category successfully added</h4>
+                    </div>
+                    <div th:if="${error}">
+                        <h4 th:text="${error}" class="alert alert-danger">Category successfully added</h4>
+                    </div>
+                    <script>
+                        function showCategoryForm(){
+                            var category = document.getElementById("category-name");
+                            var submitCategory = document.getElementById("category-submit");
+
+                            category.setAttribute("type", "text");
+                            submitCategory.setAttribute("type", "submit");
+                        }
+                    </script>
+
+
+                    <label for="category" class="col-sm-2 control-label"><button type="button" class="btn" onclick="showCategoryForm()">Add category</button></label>
+                    <div class="col-sm-10">
+                        <input type="hidden" class="form-control" name="name" id="category-name"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-10 col-sm-offset-2">
+                        <input type="hidden" id="category-submit" value="Add" class="btn btn-primary active"/>
+                    </div>
+                </div>
+
+            </form>
+
+            <form class="form-horizontal" name="f" th:object="${course}" th:action="@{/admin/course/add}" method="post">
+
+                <div class="form-group">
+                    <input type="hidden" th:field="*{id}"/>
+                    <input type="hidden" th:field="*{version}"/>
+                    <label for="title" class="col-sm-2 control-label">Title:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="title" th:field="*{title}"/>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="content" class="col-sm-2 control-label">Content:</label>
+                    <div class="col-sm-10">
+
+                        <textarea class="form-control" th:field="*{content}"></textarea>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="category" class="col-sm-2 control-label">Category:</label>
+                    <div class="col-sm-10">
+                        <select th:field="*{category}">
+                            <option th:each="category : ${categories}"
+                                    th:value="${category.name}"
+                                    th:text="${category.name}">Wireframe</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-10 col-sm-offset-2">
+                        <button type="submit" class="btn btn-primary active">Add</button>
+                    </div>
+                </div>
+
+            </form>
         </div>
 
-        <div class="form-group">
-            <div class="col-sm-10 col-sm-offset-2">
-                <input type="hidden" id="category-submit" value="Add" class="btn btn-primary active"/>
-            </div>
-        </div>
+    </div>
 
-    </form>
 
-    <form class="form-horizontal" name="f" th:object="${course}" th:action="@{/admin/course/add}" method="post">
 
-        <div class="form-group">
-            <input type="hidden" th:field="*{id}"/>
-            <input type="hidden" th:field="*{version}"/>
-            <label for="title" class="col-sm-2 control-label">Title:</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="title" th:field="*{title}"/>
 
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="content" class="col-sm-2 control-label">Content:</label>
-            <div class="col-sm-10">
-
-                <textarea class="form-control" th:field="*{content}"></textarea>
-
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="category" class="col-sm-2 control-label">Category:</label>
-            <div class="col-sm-10">
-                <select th:field="*{category}">
-                    <option th:each="category : ${categories}"
-                            th:value="${category.name}"
-                            th:text="${category.name}">Wireframe</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-sm-10 col-sm-offset-2">
-                <button type="submit" class="btn btn-primary active">Add</button>
-            </div>
-        </div>
-
-    </form>
 
 </div>
+
+<script src="/vendor/jquery/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="/vendor/metisMenu/metisMenu.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/dist/js/sb-admin-2.js"></script>
 </body>
 </html>
