@@ -82,7 +82,7 @@
                                 </div>
 
                                 <div class="form-group" th:class="${#fields.hasErrors('password')} ? 'form-group has-error' : 'form-group'">
-                                    <input type="text" class="form-control" th:field="*{password}" tabindex="2" placeholder="Password"/>
+                                    <input type="password" class="form-control" th:field="*{password}" tabindex="2" placeholder="Password"/>
                                     <span class="help-block" th:if="${#fields.hasErrors('password')}">
                                         <ul>
                                             <li th:each="err : ${#fields.errors('password')}" th:text="${err}"/>
@@ -91,7 +91,7 @@
                                 </div>
 
                                 <div class="form-group" th:class="${#fields.hasErrors('passwordConfirm')} ? 'form-group has-error' : 'form-group'">
-                                    <input type="text" class="form-control" th:field="*{passwordConfirm}" tabindex="2" placeholder="Confirm password"/>
+                                    <input type="password" class="form-control" th:field="*{passwordConfirm}" tabindex="2" placeholder="Confirm password"/>
                                     <span class="help-block" th:if="${#fields.hasErrors('passwordConfirm')}">
                                         <ul>
                                             <li th:each="err : ${#fields.errors('passwordConfirm')}" th:text="${err}"/>

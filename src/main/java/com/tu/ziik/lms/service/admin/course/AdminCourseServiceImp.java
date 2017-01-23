@@ -50,7 +50,7 @@ public class AdminCourseServiceImp implements AdminCourseService {
     public void saveCourse(Course course, String username) {
 
         course.setCourseCategory(categoryRepository.findByName(course.getCategory()));
-        //course.setUser(userRepository.findByUsername(username));
+        course.setUser(userRepository.findByUsername(username));
         courseRepository.save(course);
 
     }

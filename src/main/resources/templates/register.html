@@ -1,91 +1,118 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org"
       xmlns:sec="http://www.w3.org/1999/xhtml">
-<head>
-    <title tiles:fragment="title">Messages : Create</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<head th:substituteby="fragments/admin-main :: head">
+
 </head>
 <body>
 
+<div id="wrapper">
 
-<div class="container">
+    <div th:replace="fragments/admin-main :: main">
+    </div>
 
-    <form class="form-horizontal" name="f" th:object="${userForm}" th:action="@{/user/register}" method="post">
+    <div id="page-wrapper">
+
+        <div id="container-fluid">
 
 
-        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-            <p>Form has errors</p>
-        </div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h1 class="page-header">Register User</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
 
-        <input type="hidden" th:field="*{id}"/>
-        <input type="hidden" th:field="*{version}"/>
 
-        <div class="form-group" th:class="${#fields.hasErrors('username')} ? 'form-group has-error' : 'form-group'">
+            <br/>
 
-            <label for="username" class="col-sm-2 control-label">Username:</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" th:field="*{username}"/>
-                <span class="help-block" th:if="${#fields.hasErrors('username')}">
+
+            <div class="row">
+
+                <div class="col-md-8 col-md-offset-2">
+                    <form class="form-horizontal" name="f" th:object="${userForm}" th:action="@{/user/register}" method="post">
+
+                        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                            <p>Form has errors</p>
+                        </div>
+
+                        <input type="hidden" th:field="*{id}"/>
+                        <input type="hidden" th:field="*{version}"/>
+
+                        <div class="form-group" th:class="${#fields.hasErrors('username')} ? 'form-group has-error' : 'form-group'">
+
+                            <label for="username">Username <span class="require">*</span></label>
+
+                                <input type="text" class="form-control" th:field="*{username}"/>
+                                <span class="help-block" th:if="${#fields.hasErrors('username')}">
                     <ul>
                         <li th:each="err : ${#fields.errors('username')}" th:text="${err}"/>
                     </ul>
                 </span>
-            </div>
-        </div>
+                        </div>
 
-        <div class="form-group" th:class="${#fields.hasErrors('password')} ? 'form-group has-error' : 'form-group'">
-            <label for="password" class="col-sm-2 control-label">Password:</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" th:field="*{password}"/>
-                <span class="help-block" th:if="${#fields.hasErrors('password')}">
+                        <div class="form-group" th:class="${#fields.hasErrors('password')} ? 'form-group has-error' : 'form-group'">
+                            <label for="password">Password <span class="require">*</span></label>
+                                <input type="password" class="form-control" th:field="*{password}"/>
+                                <span class="help-block" th:if="${#fields.hasErrors('password')}">
                     <ul>
                         <li th:each="err : ${#fields.errors('password')}" th:text="${err}"/>
                     </ul>
                 </span>
-            </div>
-        </div>
+                        </div>
 
 
-        <div class="form-group" th:class="${#fields.hasErrors('passwordConfirm')} ? 'form-group has-error' : 'form-group'">
-            <label for="passwordConfirm" class="col-sm-2 control-label">Retype password:</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" name="passwordConfirm" id="passwordConfirm"/>
-                <span class="help-block" th:if="${#fields.hasErrors('passwordConfirm')}">
+                        <div class="form-group" th:class="${#fields.hasErrors('passwordConfirm')} ? 'form-group has-error' : 'form-group'">
+                            <label for="passwordConfirm">Retype password <span class="require">*</span></label>
+                                <input type="password" class="form-control" name="passwordConfirm" id="passwordConfirm"/>
+                                <span class="help-block" th:if="${#fields.hasErrors('passwordConfirm')}">
                     <ul>
                         <li th:each="err : ${#fields.errors('passwordConfirm')}" th:text="${err}"/>
                     </ul>
                 </span>
-            </div>
-        </div>
+                        </div>
 
-        <br/>
-            <div sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')" class="form-group">
-                <label for="roles" class="col-sm-2 control-label">Roles:</label>
-                <div class="col-sm-10">
-                    <ul>
-                        <li th:each="currentRole : ${roles}">
-                            <input type="checkbox" th:field="*{theRoles}" th:value="${currentRole.name}" />
-                            <label th:for="${#ids.prev('theRoles')}"
-                                   th:text="${currentRole.name}">Role</label>
-                        </li>
-                    </ul>
+                        <div sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')" class="form-group">
+                            <label for="roles" class="control-label">Roles - (Default role is ROLE_USER unless you choose otherwise) </label>
+                                <ul class="list-inline">
+                                    <li th:each="currentRole : ${roles}">
+                                        <input type="checkbox" th:field="*{theRoles}" th:value="${currentRole.name}" />
+                                        <label th:for="${#ids.prev('theRoles')}"
+                                               th:text="${currentRole.name}">Role</label>
+                                    </li>
+                                </ul>
+                        </div>
+
+                        <div class="form-group">
+                            <p><span class="require">*</span> - required fields</p>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">
+                                Register
+                            </button>
+
+                            <a th:href="@{/users}" class="btn btn-default">Cancel</a>
+
+                        </div>
+
+
+
+                    </form>
+
                 </div>
+
             </div>
 
-
-
-        <div class="form-group">
-
-            <div class="col-sm-10 col-sm-offset-2">
-                <button type="submit" class="btn btn-primary active">Register</button>
-            </div>
         </div>
 
-
-
-    </form>
+    </div>
 
 </div>
+
+<th:block th:substituteby="fragments/admin-main :: foot"></th:block>
+
+
+
 </body>
 </html>

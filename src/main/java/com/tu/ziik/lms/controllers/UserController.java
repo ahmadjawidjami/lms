@@ -60,7 +60,6 @@ public class UserController {
         userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            // redirectAttributes.addAttribute("roles", roleRepository.findAll());
             redirectAttributes.addFlashAttribute("userForm", userForm);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userForm", bindingResult);
 
@@ -70,6 +69,9 @@ public class UserController {
         userService.save(userForm);
 
         securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
+        if (securityService.isUserAuthenticatedAsAdmin()){
+            return "redirect:/users";
+        }
 
         return "redirect:/welcome";
     }
@@ -118,37 +120,4 @@ public class UserController {
         return "welcome";
     }
 
-
-    //    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-//    public String registration(Model model) {
-//        model.addAttribute("userForm", new User());
-//
-//        List<java.lang.String> roles = new ArrayList<>();
-//
-//        List<Role> roleList = roleRepository.findAll();
-//
-//        for (Role currentRole: roleList){
-//            roles.add(currentRole.getName());
-//        }
-//
-//        model.addAttribute("roles", roleList);
-//
-//        return "registration";
-//    }
-
-
-//    @RequestMapping(value = "/registration", method = RequestMethod.POST)
-//    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
-//        userValidator.validate(userForm, bindingResult);
-//
-//        if (bindingResult.hasErrors()) {
-//            return "registration";
-//        }
-//
-//        userService.save(userForm);
-//
-//        securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
-//
-//        return "redirect:/welcome";
-//    }
 }
