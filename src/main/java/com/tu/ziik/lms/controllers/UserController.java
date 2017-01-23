@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import com.tu.ziik.lms.model.User;
 import com.tu.ziik.lms.service.SecurityService;
@@ -40,10 +37,20 @@ public class UserController {
 
     @RequestMapping(value = "/user/register", method = RequestMethod.GET)
     public String registerUser(Model model) {
-        model.addAttribute("userForm", new User());
+
+        User userForm = (User) model.asMap().get("userForm");
+
+        if (userForm == null) {
+            model.addAttribute("userForm", new User());
+        }else
+            model.addAttribute("userForm", userForm);
 
         model.addAttribute("roles", roleRepository.findAll());
-        return "register";
+        boolean isAuthenticatedAsAdmin = securityService.isUserAuthenticatedAsAdmin();
+        if (isAuthenticatedAsAdmin)
+            return "register";
+        model.addAttribute("setRegisterActive", "true");
+        return "new-login";
     }
 
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
@@ -53,8 +60,11 @@ public class UserController {
         userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addAttribute("roles", roleRepository.findAll());
-            return "redirect:/login";
+            // redirectAttributes.addAttribute("roles", roleRepository.findAll());
+            redirectAttributes.addFlashAttribute("userForm", userForm);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userForm", bindingResult);
+
+            return "redirect:/user/register";
         }
 
         userService.save(userForm);
@@ -65,7 +75,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "user/delete/{id}", method = RequestMethod.GET)
-    public String deleteUser(@PathVariable Long id){
+    public String deleteUser(@PathVariable Long id) {
 
         userService.delete(id);
         return "redirect:/users";
@@ -73,7 +83,7 @@ public class UserController {
 
 
     @RequestMapping(value = "/user/edit/{id}")
-    public String showEditForm(@PathVariable Long id, Model model){
+    public String showEditForm(@PathVariable Long id, Model model) {
 
         User user = userService.findById(id);
 
@@ -97,7 +107,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/forgot", method = RequestMethod.GET)
-    public String showForgetForm(){
+    public String showForgetForm() {
 
 
         return "forgot";

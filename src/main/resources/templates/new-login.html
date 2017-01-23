@@ -11,6 +11,8 @@
 
 <body>
 
+
+
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
@@ -66,6 +68,9 @@
                             </form>
                             <form id="register-form" th:action="@{/user/register}" th:object="${userForm}" method="post" role="form" style="display: none;">
 
+                                <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                                    <p>Form has errors</p>
+                                </div>
 
                                 <div class="form-group" th:class="${#fields.hasErrors('username')} ? 'form-group has-error' : 'form-group'">
                                     <input type="text" class="form-control" th:field="*{username}" tabindex="1" placeholder="Username"/>
@@ -116,5 +121,15 @@
 <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
 
 <script src="/js/login-register.js"></script>
+
+<div th:if="${setRegisterActive}">
+    <script>
+        $("#register-form").delay(1).fadeIn(1);
+        $("#login-form").fadeOut(1);
+        $('#login-form-link').removeClass('active');
+        $("#register-form-link").addClass('active');
+    </script>
+
+</div>
 </body>
 </html>
