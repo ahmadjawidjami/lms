@@ -1,0 +1,63 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+
+
+
+
+
+
+<head th:substituteby="fragments/admin-main :: head">
+
+</head>
+
+<body>
+
+
+<div id="wrapper">
+
+    <div th:replace="fragments/admin-main :: main">
+    </div>
+
+    <!-- Page Content -->
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Events</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <br/>
+            <!-- <div sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')" class="form-group"> -->
+
+
+            <h3><a class="btn btn-primary" th:href="@{/admin/event//add}">Add Event</a></h3>
+
+            <div th:each="event : ${events}">
+                <div class="well">
+                    <h3 th:text="${event.name}"></h3>
+                    <p th:text="${event.date}"></p>
+                    <p th:text="${event.description}"></p>
+                </div>
+
+
+            </div>
+
+
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /#page-wrapper -->
+
+
+    <!--  </div> -->
+</div>
+
+<th:block th:substituteby="fragments/admin-main :: foot"></th:block>
+
+</body>
+
+</html>
