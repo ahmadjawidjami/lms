@@ -1,45 +1,73 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org"
       xmlns:sec="http://www.w3.org/1999/xhtml">
-<head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
-          th:href="@{'/css/bootstrap.min.css'}"/>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            th:src="@{'/js/bootstrap.min.js'}"></script>
+
+
+
+
+
+
+
+<head th:substituteby="fragments/admin-main :: head">
+
 </head>
+
 <body>
 
 
-<div th:if="${success}">
-    <h2 th:text="${success}"/>
-</div>
+<div id="wrapper">
 
-<div th:if="${error}">
-    <h2 th:text="${error}"/>
-</div>
-
-<div class="container">
-
-    <div th:class="jumbotron">
-        <h1 th:text="${courseTitle}">Course title</h1>
+    <div th:replace="fragments/admin-main :: main">
     </div>
 
+    <!-- Page Content -->
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 th:text="${courseTitle}" class="page-header">Course title</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <br/>
+            <!-- <div sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')" class="form-group"> -->
 
-    <h3><a class="btn btn-primary" th:href="@{'/lecturer/course/'+${courseId}+'/add'}">Add post</a></h3>
 
-    <div th:each="post : ${posts}">
-        <div class="well">
-            <h3 th:text="${post.title}"></h3>
-            <p th:text="${post.description}"></p>
-            <a th:href="${post.filePath}"><span th:text="${post.fileName}"></span></a>
+            <h3><a class="btn btn-primary" th:href="@{'/lecturer/course/'+${courseId}+'/add'}">Add post</a></h3>
+
+            <div th:each="post : ${posts}">
+                <div class="well">
+                    <h3 th:text="${post.title}"></h3>
+                    <p th:text="${post.description}"></p>
+                    <a th:href="${post.filePath}"><span th:text="${post.fileName}"></span></a>
+                </div>
+
+
+            </div>
+
+
         </div>
-
-
+        <!-- /.container-fluid -->
     </div>
+    <!-- /#page-wrapper -->
 
 
-
-
+    <!--  </div> -->
 </div>
+
+<th:block th:substituteby="fragments/admin-main :: foot"></th:block>
+
 </body>
+
+
+
+
+
+
+
+
+
+
+
 </html>
