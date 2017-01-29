@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
         Set<Role> theRoles = new HashSet<>();
 
-        if (user.getTheRoles() != null) {
+        if (user.getTheRoles() != null && !user.getTheRoles().isEmpty()) {
             for (String currentRole : user.getTheRoles()) {
                 theRoles.addAll(roleRepository.findByName(currentRole));
             }

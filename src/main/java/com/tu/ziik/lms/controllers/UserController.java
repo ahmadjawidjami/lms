@@ -47,8 +47,11 @@ public class UserController {
 
         model.addAttribute("roles", roleRepository.findAll());
         boolean isAuthenticatedAsAdmin = securityService.isUserAuthenticatedAsAdmin();
-        if (isAuthenticatedAsAdmin)
+        if (isAuthenticatedAsAdmin){
+            model.addAttribute("pageTitle", "Register User");
             return "register";
+        }
+
         model.addAttribute("setRegisterActive", "true");
         return "new-login";
     }
@@ -63,15 +66,22 @@ public class UserController {
             redirectAttributes.addFlashAttribute("userForm", userForm);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userForm", bindingResult);
 
+            if (userForm.getId() != null){
+//                redirectAttributes.addAttribute("id", userForm.getId());
+//                return "redirect:/user/edit/{id}";
+                return "redirect:/user/edit/" + userForm.getId() + "";
+            }
+
             return "redirect:/user/register";
         }
 
         userService.save(userForm);
 
-        securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
         if (securityService.isUserAuthenticatedAsAdmin()){
             return "redirect:/users";
         }
+
+        securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
 
         return "redirect:/welcome";
     }
@@ -87,10 +97,20 @@ public class UserController {
     @RequestMapping(value = "/user/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
 
-        User user = userService.findById(id);
+        User userForm = (User) model.asMap().get("userForm");
 
-        model.addAttribute("userForm", user);
+        if (userForm == null) {
+              User user = userService.findById(id);
+              model.addAttribute("userForm", user);
+           // model.addAttribute("userForm", new User());
+        }else
+            model.addAttribute("userForm", userForm);
+
+      //  User user = userService.findById(id);
+
+      //  model.addAttribute("userForm", user);
         model.addAttribute("roles", roleRepository.findAll());
+        model.addAttribute("pageTitle", "Edit User");
 
         return "register";
     }

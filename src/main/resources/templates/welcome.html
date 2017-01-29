@@ -18,12 +18,18 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Blank</h1>
-                    <div th:fragment="logout" class="logout"
-                         sec:authorize="isAuthenticated()">
-                        Welcome: <span sec:authentication="name">Bob</span> |
-                        Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span> |
+                    <h1 class="page-header"> Welcome<span th:fragment="logout" class="logout"
+                         sec:authorize="isAuthenticated()">: <span sec:authentication="name">Bob</span> |
+                            Roles: <span sec:authentication="principal.authorities">[ROLE_USER]</span>
+
+
                         <!--/* When using CSRF this needs to be a POST */-->
+                    </span>
+                    </h1>
+                    <div class="well">
+                        <h3>This is first page content <br/>
+                            Here maybe some news here.
+                        </h3>
                     </div>
                 </div>
                 <!-- /.col-lg-12 -->
