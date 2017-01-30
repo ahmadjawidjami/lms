@@ -41,6 +41,51 @@
                     <h3 th:text="${post.title}"></h3>
                     <p th:text="${post.description}"></p>
                     <a th:href="${post.filePath}"><span th:text="${post.fileName}"></span></a>
+                    <br/>
+                    <h3>Comments:</h3>
+                    <div th:each="comment : ${post.comments}">
+                       Comment by: <span th:text="${comment.commenter}"></span>
+                        <p th:text="${comment.description}"></p>
+                        <hr/>
+                    </div>
+
+                    <div>
+                        <br/>
+
+                        <a data-toggle="collapse" th:href="${'#' + post.id}" aria-expanded="false" aria-controls="collapseExample">
+                            Comment
+                        </a>
+                        <div class="collapse" th:id="${post.id}">
+                            <div>
+                                <form method="POST" th:object="${comment}" th:action="@{'/lecturer/course/'+${courseId} + '/' +${post.id}+'/comment'}">
+
+                                    <div class="form-group">
+                                        <label for="commenter">Your Name<span class="require">*</span></label>
+                                        <input type="text" class="form-control" id="commenter" th:field="*{commenter}"/>
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <label for="description">Your Comment<span class="require">*</span></label>
+                                        <textarea rows="5" class="form-control" th:field="*{description}" ></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">
+                                            Save comment
+                                        </button>
+
+
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
 
 

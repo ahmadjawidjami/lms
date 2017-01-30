@@ -4,6 +4,7 @@ import com.tu.ziik.lms.model.User;
 import com.tu.ziik.lms.model.admin.course.Course;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by ahmadjawid on 12/28/16.
@@ -23,6 +24,8 @@ public class CourseContentPost {
     private Course course;
 
     private User user;
+
+    private Set<Comment> comments;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -84,5 +87,15 @@ public class CourseContentPost {
 
     public void setUser(User user){
         this.user = user;
+    }
+
+
+    @OneToMany(mappedBy = "courseContentPost", cascade = CascadeType.ALL)
+    public Set<Comment> getComments(){
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 }

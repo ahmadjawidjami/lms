@@ -55,6 +55,14 @@ public class AdminCourseController {
     }
 
 
+    @RequestMapping(value ="/admin/course/categories", method = RequestMethod.GET)
+    public String listCategories(Model model){
+        model.addAttribute("categories", adminCourseService.findAllCategories());
+
+        return "admin/course/category-list";
+    }
+
+
     @RequestMapping(value = "/admin/course/add-category", method = RequestMethod.POST)
     public String addCategory(@ModelAttribute ("courseCategory") CourseCategory courseCategory, RedirectAttributes redirect){
 

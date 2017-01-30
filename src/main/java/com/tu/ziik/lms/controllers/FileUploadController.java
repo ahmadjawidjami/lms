@@ -1,5 +1,6 @@
 package com.tu.ziik.lms.controllers;
 
+import com.tu.ziik.lms.model.lecturer.Comment;
 import com.tu.ziik.lms.model.lecturer.CourseContentPost;
 import com.tu.ziik.lms.service.SecurityService;
 import com.tu.ziik.lms.service.lecturer.course.CourseContentPostService;
@@ -43,14 +44,8 @@ public class FileUploadController {
         model.addAttribute("courseTitle", courseTitle);
 
         model.addAttribute("post", new CourseContentPost());
+        model.addAttribute("comment", new Comment());
 
-//        model.addAttribute("files", storageService
-//                .loadAll(courseId)
-//                .map(path ->
-//                        MvcUriComponentsBuilder
-//                                .fromMethodName(FileUploadController.class, "serveFile", courseId, path.getFileName().toString())
-//                                .build().toString())
-//                .collect(Collectors.toList()));
 
         return "/lecturer/course-content-list";
     }

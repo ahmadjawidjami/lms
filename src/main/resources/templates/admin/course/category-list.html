@@ -1,0 +1,48 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:substituteby="fragments/admin-main :: head">
+
+</head>
+
+<body>
+
+
+<div id="wrapper">
+
+    <div th:replace="fragments/admin-main :: main">
+    </div>
+
+    <!-- Page Content -->
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">List of Course Categories</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <h3><a th:href="@{/admin/course/add}">Add new category</a></h3>
+            <br/>
+            <!-- <div sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')" class="form-group"> -->
+            <div class="col-sm-10">
+                <ul th:each="currentCategory : ${categories}">
+                    <li>
+                        <h2><a href="#" ><span th:text="${currentCategory.name}"></span></a></h2>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /#page-wrapper -->
+
+
+    <!--  </div> -->
+</div>
+
+<th:block th:substituteby="fragments/admin-main :: foot"></th:block>
+
+</body>
+</html>
